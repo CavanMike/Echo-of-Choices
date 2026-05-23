@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    activity_game.xml
+    Layer order (bottom → top):
+      1. Background View          – full screen
+      2. iv_character             – tall sprite, stands freely on screen, left-anchored
+      3. HUD LinearLayout         – top bar
+      4. Bottom UI LinearLayout   – dialog box + navigation buttons
+-->
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- ── LAYER 1: BACKGROUND ───────────────────────────────────────────── -->
+    <View
+        android:id="@+id/view_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_office" />
+
+    <!-- ── LAYER 2: CHARACTER SPRITE (free-floating, full-height) ────────── -->
+    <!--
+        Sits directly on top of the background.
+        bottom gravity anchors the sprite feet to the screen bottom.
+        Width is half the screen so it never covers the dialog fully.
+        Transparent PNG recommended – no box, no card, no background.
+    -->
+    <ImageView
+        android:id="@+id/iv_character"
+        android:layout_width="260dp"
+        android:layout_height="500dp"
+        android:layout_gravity="bottom|start"
+        android:layout_marginStart="0dp"
+        android:layout_marginBottom="170dp"
+        android:scaleType="fitEnd"
+        android:adjustViewBounds="true"
+        android:visibility="gone"
+        android:contentDescription="Character sprite" />
+
+    <!-- ── LAYER 3: HUD (top bar, always on top) ─────────────────────────── -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:orientation="horizontal"
+        android:padding="12dp"
+        android:background="#88000000">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Echo of Choices"
+            android:textColor="#D4AF37"
+            android:textSize="14sp"
+            android:fontFamily="serif-monospace"
+            android:textStyle="italic" />
+
+        <TextView
+            android:id="@+id/tv_time_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Time Left: 365 days"
+            android:textColor="#FF6B6B"
+            android:textSize="13sp"
+            android:fontFamily="monospace" />
+    </LinearLayout>
+
+    <!-- ── LAYER 4: BOTTOM UI (dialog + name label + buttons) ────────────── -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:orientation="vertical">
+
+        <!-- Speaker name tag — floats just above the dialog card -->
+        <TextView
+            android:id="@+id/tv_speaker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:text=""
+            android:textColor="#0D1B2E"
+            android:textSize="13sp"
+            android:fontFamily="serif"
+            android:textStyle="bold"
+            android:background="#D4AF37"
+            android:visibility="gone" />
+
+        <!-- ── DIALOG BOX ──────────────────────────────────────────────── -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_dialog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="8dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="12dp"
+            app:cardBackgroundColor="#EE0D1B2E">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <!-- Divider line -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#33D4AF37"
+                    android:layout_marginBottom="8dp" />
+
+                <!-- Dialog text -->
+                <TextView
+                    android:id="@+id/tv_dialog"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="#E8E8E8"
+                    android:textSize="15sp"
+                    android:fontFamily="serif"
+                    android:lineSpacingMultiplier="1.4"
+                    android:minLines="3" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- ── NEXT button ─────────────────────────────────────────────── -->
+        <Button
+            android:id="@+id/btn_next"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="6dp"
+            android:text="Next ▶"
+            android:textColor="#0D1B2E"
+            android:textSize="15sp"
+            android:backgroundTint="#D4AF37"
+            android:visibility="visible" />
+
+        <!-- ── CHOICE buttons ──────────────────────────────────────────── -->
+        <LinearLayout
+            android:id="@+id/layout_choices"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="6dp"
+            android:visibility="gone">
+
+            <Button
+                android:id="@+id/btn_choice1"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginBottom="6dp"
+                android:text="Choice 1"
+                android:textColor="#0D1B2E"
+                android:textSize="14sp"
+                android:backgroundTint="#4A8FA8" />
+
+            <Button
+                android:id="@+id/btn_choice2"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:text="Choice 2"
+                android:textColor="#0D1B2E"
+                android:textSize="14sp"
+                android:backgroundTint="#4A6E8F" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>
